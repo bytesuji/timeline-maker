@@ -82,7 +82,16 @@ def set_interval(interval_length, string=framework_string, custom_interval=False
         new_timeline = r'\timeline{' + str(interval_length) + '}'
 
     return new_string
-#def add_
+
+def add_milestone(phase, phase_degree, direction, length, placement, width, text, string=framework_string):
+
+    index = string.find(r'\addmilestone')
+    index = index + string[index:].find('\n')
+
+    new_string = string[:index] + '\n' + r'\addmilestone{at=phase-' + str(phase) + '.' + str(phase_degree) + ',direction=' + str(direction) + ':' + str(length) + 'cm,text={' + text + '},text options={' + placement + ',text width=' + str(width)
+    new_string = new_string + 'cm}}\n' + string[index:]
+
+    return new_string
 
 if __name__ == '__main__':
 
@@ -96,6 +105,8 @@ if __name__ == '__main__':
     tex = add_phase(2,3,0.5,tex,'orange','3.5cm')
     tex = add_phase(3,4,0.5,tex,'yellow','4.5cm')
     tex = add_phase(4,5,0.5,tex,'green','5.6cm')
+
+    tex = add_milestone(2,90,90,2,'above',5,'This is a mason jar containing a last laugh.',tex)
 
     init_file(name, tex)
 
