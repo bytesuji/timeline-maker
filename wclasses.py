@@ -54,7 +54,7 @@ class Timeline:
             custom_intervals = []
             while True:
                 next_interval = input()
-                if next_interval.lower() = 'done':
+                if next_interval.lower() == 'done':
                     break
                 custom_intervals.append(next_interval)
             # replace \timeline
