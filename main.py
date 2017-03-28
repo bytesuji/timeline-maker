@@ -106,8 +106,9 @@ if __name__ == '__main__':
     tex = add_phase(3,4,0.5,tex,'yellow','4.5cm')
     tex = add_phase(4,5,0.5,tex,'green','5.6cm')
 
-    tex = add_milestone(2,90,90,2,'above',5,'This is a mason jar containing a last laugh.',tex)
+    tex = add_milestone(2,90,90,2,'above',5,'Example label.',tex)
 
     init_file(name, tex)
-
     create(name)
+
+# TODO rewrite this entire thing as a class
