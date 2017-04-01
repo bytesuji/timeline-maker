@@ -1,3 +1,4 @@
+#!bin/python3
 from subprocess import call
 
 class Timeline:
@@ -47,7 +48,9 @@ class Timeline:
         index = new_string.find('\phase')
         index = new_string[index:].find('\n') + index; # find the next newline after the first phase
 
-        new_string = new_string[:index] + '\n\t' + r'\phase{between week=' + str(start_week) + ' and ' + str(end_week) + ' in ' + str(in_val) + ',involvement degree=' + str(degree) + 'cm,phase color=' + color + '}' + new_string[index:]
+        new_string = new_string[:index] + '\n\t' + r'\phase{between week=' + str(start_week) + \
+		  ' and ' + str(end_week) + ' in ' + str(in_val) + ',involvement degree=' + str(degree)\
+		   + 'cm,phase color=' + color + '}' + new_string[index:]
 
         self.string = new_string
 
@@ -93,7 +96,9 @@ class Timeline:
         index = self.string.find(r'\addmilestone')
         index = index + self.string[index:].find('\n')
 
-        new_string = self.string[:index] + '\n' + r'\addmilestone{at=phase-' + str(phase) + '.' + str(phase_degree) + ',direction=' + str(direction) + ':' + str(length) + 'cm,text={' + text + '},text options={' + placement + ',text width=' + str(width)
-        new_string = new_string + 'cm}}\n' + self.string[index:]
+        new_string = self.string[:index] + '\n' + r'\addmilestone{at=phase-' + str(phase) + \
+		  '.' + str(phase_degree) + ',direction=' + str(direction) + ':' + str(length) +\
+		  'cm,text={' + text + '},text options={' + placement + ',text width=' + str(width)\
+		  + 'cm}}\n' + self.string[index:]
 
         self.string = new_string
