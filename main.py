@@ -24,9 +24,14 @@ def recompile(widget, data):
 
 def init_project(widget, data):
 
-    textbox = data[1]
-    data[0] = textbox.get_text()
-    data[2].hide()
+#     init_tuple = [project_init_input, project_init_window, timeline]
+
+    textbox = data[0]
+    timeline = data[2]
+    name = textbox.get_text()
+    timeline.set_name(name)
+    print("timeline created with name", timeline.name, '\n', timeline)
+    data[1].hide()
 
 def add_new_phase(widget, data):
 
@@ -50,7 +55,6 @@ def set_interval(widget, data):
         window.show()
     else:
         timeline.set_interval(weeks)
-
 def ci_set(widget, data):
 
     timeline = data[10]
@@ -161,15 +165,14 @@ def main():
 
     ### connections ###
     ## init ##
-    project_name = None
-    init_tuple = (project_name, project_init_input, project_init_window)
+    timeline = tl.Timeline()
+    init_tuple = [project_init_input, project_init_window, timeline]
     project_init_ok.connect('clicked', init_project, init_tuple)
-    timeline = tl.Timeline(project_name)
     ## main window ##
     main_new_phase.connect('clicked', show_widget, phase_input)
     main_new_milestone.connect('clicked', show_widget, milestone_input)
     main_set_interval.connect('clicked', show_widget, interval_input)
-    main_recompile.connect('clicked', recompile)
+    main_recompile.connect('clicked', recompile, timeline)
 
     pi_data_tuple = (pi_start_week, pi_end_week, pi_distance_adjust,\
     pi_color, pi_size_adjust, timeline)
@@ -192,6 +195,7 @@ def main():
     ## menu clickies ##
     new_project_tuple = (timeline, project_new_window, project_new_input, project_new_ok)
     file_new.connect('activate', new_project, new_project_tuple)
+    file_quit.connect('activate', gtk.main_quit)
 
     gtk.main()
 

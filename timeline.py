@@ -4,7 +4,7 @@ from subprocess import call
 
 class Timeline:
 
-    def __init__(self, name):
+    def __init__(self, name='placeholder'):
 
         self.string = r"""\documentclass[border=10pt]{standalone}
         \usepackage{tikz}
@@ -24,6 +24,10 @@ class Timeline:
         \end{tikzpicture}
         \end{document}
         """
+
+        self.name = name
+
+    def set_name(self, name):
 
         self.name = name
 
@@ -63,7 +67,6 @@ class Timeline:
     def get_custom_intervals():
 
         print("Please input your interval markers: ")
-        next_interval = ''
         custom_intervals = []
         while True:
             next_interval = input()
