@@ -111,7 +111,8 @@ class Timeline:
         else:
             begin_index = self.string.find(r'\timeline')
             end_index = begin_index + self.string[begin_index:].find('\n')
-            new_timeline = r'\timeline{' + str(interval_length) + '}'
+            new_string = self.string[:begin_index] + r'\timeline{' + str(interval_length) + '}' + \
+            self.string[end_index:]
 
         self.string = new_string
 
