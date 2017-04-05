@@ -2,7 +2,8 @@
 ### TODO ###
 # make color selection a dropdown menu
 # make placement a dropdown
-
+# make 'added' confirm labels
+# reset/clear sliders and boxes upon add click
 
 import timeline as tl
 import gi
@@ -24,13 +25,12 @@ def recompile(widget, data):
 
 def init_project(widget, data):
 
-#     init_tuple = [project_init_input, project_init_window, timeline]
-
+#   init_tuple = [project_init_input, project_init_window, timeline]
     textbox = data[0]
     timeline = data[2]
     name = textbox.get_text()
     timeline.set_name(name)
-    print("timeline created with name", timeline.name, '\n', timeline)
+#   print("timeline created with name", timeline.name, '\n', timeline)
     data[1].hide()
 
 def add_new_phase(widget, data):
@@ -80,20 +80,22 @@ def add_new_milestone(widget, data):
 
 def new_project(widget, data):
 
+    # new_project_tuple = [timeline, project_new_window, project_new_input, project_new_ok]
     timeline = data[0]
+    timeline.__init__()
     window = data[1]
-    box = data[2]
+    textbox = data[2]
     ok = data[3]
-    new_name = None
+
     window.show()
 
-    def _ok_sub_func(name=new_name, timeline=timeline, box=box):
+    def _ok_callback(widget, data):
 
-        new_name = box.get_text()
-        timeline = tl.Timeline(new_name)
+        data[0].set_name(data[2].get_text())
+        data[1].hide()
 
-    ok.connect('clicked', _ok_sub_func)
-    ok.connect('clicked', hide_widget, window)
+    ok.connect('clicked', _ok_callback, data)
+
 
 def main():
 
@@ -134,8 +136,8 @@ def main():
 
     file_new = builder.get_object('file-new')
     file_open = builder.get_object('file-open')
-    file_save = builder.get_object('file-save')
-    file_save_as = builder.get_object('file-save-as')
+#    file_save = builder.get_object('file-save')
+#    file_save_as = builder.get_object('file-save-as')
     file_quit = builder.get_object('file-quit')
 
     edit_new_phase = builder.get_object('edit-new-phase')
@@ -193,7 +195,7 @@ def main():
     project_init_window.connect('destroy', hide_widget, project_init_window)
 
     ## menu clickies ##
-    new_project_tuple = (timeline, project_new_window, project_new_input, project_new_ok)
+    new_project_tuple = [timeline, project_new_window, project_new_input, project_new_ok]
     file_new.connect('activate', new_project, new_project_tuple)
     file_quit.connect('activate', gtk.main_quit)
 
