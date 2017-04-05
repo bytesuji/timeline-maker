@@ -4,19 +4,48 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
 
 def hide_widget(widget, data):
+
     data.hide()
 
 def show_widget(widget, data):
+
     data.show()
 
 def recompile(widget, data):
+
     data.init_file()
     data.create()
 
 def init_project(widget, data):
+
     textbox = data[1]
     data[0] = textbox.get_text()
     data[2].hide()
+
+def add_new_phase(widget, data):
+
+    start_week = data[0].get_text()
+    end_week = data[1].get_text()
+    distance = data[2].get_text()
+    color = data[3].get_text()
+    size = data[4].get_text()
+    timeline = data[5]
+
+    timeline.add_phase(start_week, end_week, distance, color, size)
+
+def add_new_milestone(widget, data):
+
+    phase = data[0].get_text()
+    phase_degree = data[1].get_text()
+    direction = data[2].get_text()
+    length = data[3].get_text()
+    placement = data[4].get_text()
+    width = data[5].get_text()
+    text = data[6].get_text()
+    timeline = data[7]
+
+    timeline.add_milestone(phase, phase_degree, direction,\
+    length, placement, width, text)
 
 def main():
 
@@ -86,13 +115,20 @@ def main():
     project_name = None
     init_tuple = (project_name, project_init_input, project_init_window)
     project_init_ok.connect('clicked', init_project, project_name)
-
+    timeline = tl.Timeline(project_name)
     ## main window ##
     main_new_phase.connect('clicked', show_widget, phase_input)
     main_new_milestone.connect('clicked', show_widget, milestone_input)
     main_set_interval.connect('clicked', show_widget, interval_input)
     main_recompile.connect('clicked', recompile)
 
+    pi_data_tuple = (pi_start_week, pi_end_week, pi_distance,\
+    pi_color, pi_size, timeline)
+    pi_add.connect('clicked', add_new_phase, pi_data_tuple)
+
+    mi_data_tuple = (mi_phase, mi_phase_degree, mi_direction, mi_length, mi_placement,\
+    mi_width, mi_text, timeline)
+    mi_add.connect('clicked', add_new_milestone, mi_data_tuple)
 
 if __name__ == '__main__':
     main()
