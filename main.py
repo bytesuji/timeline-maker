@@ -44,6 +44,13 @@ def add_new_phase(widget, data):
 
     timeline.add_phase(start_week, end_week, distance, color, size)
 
+    # cleanup
+    data[0].set_text('')
+    data[1].set_text('')
+    data[2].set_value(0)
+    data[3].set_text('')
+    data[4].set_value(0)
+
 def set_interval(widget, data):
 
     weeks = data[0].get_text()
@@ -55,6 +62,7 @@ def set_interval(widget, data):
         window.show()
     else:
         timeline.set_interval(weeks)
+
 def ci_set(widget, data):
 
     timeline = data[10]
@@ -77,6 +85,15 @@ def add_new_milestone(widget, data):
 
     timeline.add_milestone(phase, phase_degree, direction,\
     length, placement, width, text)
+
+    data[0].set_text('')
+    data[1].set_value(0)
+    data[2].set_value(0)
+    data[3].set_text('')
+    data[4].set_text('')
+    data[5].set_text('')
+    data[6].set_text('')
+
 
 def new_project(widget, data):
 
@@ -189,6 +206,19 @@ def main():
 
     ci_data_tuple = (ci_1, ci_2, ci_3, ci_4, ci_5, ci_6, ci_7, ci_8, ci_9, ci_10, timeline)
     ci_done.connect('clicked', ci_set, ci_data_tuple)
+
+    # for hiding non-used widgets
+    hiders = (main_new_milestone, main_set_interval, main_recompile)
+    for hider in hiders:
+        hider.connect('clicked', hide_widget, phase_input)
+    hiders = (main_new_phase, main_set_interval, main_recompile)
+    for hider in hiders:
+        hider.connect('clicked', hide_widget, milestone_input)
+    hiders = (main_new_phase, main_new_milestone, main_recompile)
+    for hider in hiders:
+        hider.connect('clicked', hide_widget, interval_input)
+    del hiders
+
     ## destroys ##
     main_window.connect('destroy', gtk.main_quit)
     custom_interval_window.connect('destroy', hide_widget, custom_interval_window)
