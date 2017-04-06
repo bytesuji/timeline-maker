@@ -19,6 +19,11 @@ def show_widget(widget, data):
 
     data.show()
 
+def run_widget(widget, data):
+
+    data.run()
+    data.destroy()
+
 def recompile(widget, data):
 
     data.init_file()
@@ -161,8 +166,6 @@ def main():
 #    file_save_as = builder.get_object('file-save-as')
     file_quit = builder.get_object('file-quit')
 
-    edit_new_phase = builder.get_object('edit-new-phase')
-
     help_about = builder.get_object('help-about')
     ## initialiser window ##
     project_init_window = builder.get_object('project-init-window')
@@ -185,6 +188,9 @@ def main():
     ci_8 = builder.get_object('ci-8')
     ci_9 = builder.get_object('ci-9')
     ci_10 = builder.get_object('ci-10')
+
+    ## about window ##
+    about_window = builder.get_object('about-window')
 
     ### connections ###
     ## init ##
@@ -233,6 +239,7 @@ def main():
     new_project_tuple = [timeline, project_new_window, project_new_input, project_new_ok]
     file_new.connect('activate', new_project, new_project_tuple)
     file_quit.connect('activate', gtk.main_quit)
+    help_about.connect('activate', run_widget, about_window)
 
     gtk.main()
 
