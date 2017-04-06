@@ -4,6 +4,7 @@
 # make placement a dropdown
 # make 'added' confirm labels
 # reset/clear sliders and boxes upon add click
+# add preview window
 
 import timeline as tl
 import gi
@@ -53,22 +54,25 @@ def add_new_phase(widget, data):
 
 def set_interval(widget, data):
 
-    weeks = data[0].get_text()
-    switch = data[1].get_active()
+    weeks = data[0]
+    switch = data[1]
     window = data[2]
     timeline = data[3]
 
-    if switch:
+    if switch.get_active():
         window.show()
     else:
-        timeline.set_interval(weeks)
+        timeline.set_interval(weeks.get_text())
+
+    switch.set_active(False)
+    weeks.set_text('')
 
 def ci_set(widget, data):
 
     timeline = data[10]
     custom_intervals = []
     for i in range(10):
-        if data[i].get_text()[0] != '': # sort of a hack, could cause bugs
+        if data[i].get_text() != '': # sort of a hack, could cause bugs
             custom_intervals.append(data[i].get_text())
     timeline.set_interval(0, True, custom_intervals)
 
@@ -206,6 +210,7 @@ def main():
 
     ci_data_tuple = (ci_1, ci_2, ci_3, ci_4, ci_5, ci_6, ci_7, ci_8, ci_9, ci_10, timeline)
     ci_done.connect('clicked', ci_set, ci_data_tuple)
+    ci_done.connect('clicked', hide_widget, custom_interval_window)
 
     # for hiding non-used widgets
     hiders = (main_new_milestone, main_set_interval, main_recompile)

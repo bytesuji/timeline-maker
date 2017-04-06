@@ -2,11 +2,6 @@
 <!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkImage" id="edit-new-node-icon">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-add</property>
-  </object>
   <object class="GtkAdjustment" id="mi-direction-adjust">
     <property name="upper">360</property>
     <property name="step_increment">0.10000000000000001</property>
@@ -80,29 +75,6 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem" id="menu-edit">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_Edit</property>
-                <property name="use_underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu" id="sub-edit">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkImageMenuItem" id="edit-new-phase">
-                        <property name="label" translatable="yes">Add new node</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="image">edit-new-node-icon</property>
-                        <property name="use_stock">False</property>
                       </object>
                     </child>
                   </object>
@@ -202,6 +174,7 @@
                   <object class="GtkScale" id="pi-distance">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="margin_right">8</property>
                     <property name="adjustment">pi-distance-adjust</property>
                     <property name="show_fill_level">True</property>
                     <property name="round_digits">1</property>
@@ -497,9 +470,11 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">end</property>
+            <property name="valign">end</property>
             <property name="margin_left">36</property>
+            <property name="margin_right">7</property>
             <property name="margin_top">34</property>
-            <property name="margin_bottom">3</property>
+            <property name="margin_bottom">7</property>
             <child>
               <object class="GtkButton" id="main-new-phase">
                 <property name="label" translatable="yes">Add new
@@ -562,7 +537,8 @@ milestone</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">5</property>
+            <property name="pack_type">end</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>
