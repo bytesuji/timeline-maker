@@ -254,11 +254,6 @@ def main():
     hiders = (main_new_phase, main_new_milestone, main_recompile)
     for hider in hiders:
         hider.connect('clicked', hide_widget, interval_input)
-    '''
-    hiders = (main_new_phase, main_new_milestone, main_set_interval)
-    for hider in hiders:
-        hider.connect('clicked', hide_widget, viewport)
-    '''
     del hiders
 
     ## destroys ##

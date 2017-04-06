@@ -81,16 +81,6 @@ class Timeline:
         """Sets the interval markers on the timeline. The default is weeks."""
 
         if custom_interval:
-            '''
-            print("Please input your interval markers: ")
-            next_interval = ''
-            custom_intervals = []
-            while True:
-                next_interval = input()
-                if next_interval.lower() == 'done':
-                    break
-                custom_intervals.append(next_interval)
-            '''
             # replace \timeline
             begin_index = self.string.find(r'\timeline')
             end_index = begin_index + self.string[begin_index:].find('\n')
