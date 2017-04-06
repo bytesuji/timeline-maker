@@ -26,17 +26,22 @@ def run_widget(widget, data):
 
 def recompile(widget, data):
 
-    data.init_file()
-    data.create()
+    timeline = data[0]
+    preview = data[1]
+    viewport = data[2]
+
+    timeline.init_file()
+    timeline.create()
+
+    preview.set_from_file(timeline.name + '.png')
+    viewport.show()
 
 def init_project(widget, data):
 
-#   init_tuple = [project_init_input, project_init_window, timeline]
     textbox = data[0]
     timeline = data[2]
     name = textbox.get_text()
     timeline.set_name(name)
-#   print("timeline created with name", timeline.name, '\n', timeline)
     data[1].hide()
 
 def add_new_phase(widget, data):
@@ -77,7 +82,7 @@ def ci_set(widget, data):
     timeline = data[10]
     custom_intervals = []
     for i in range(10):
-        if data[i].get_text() != '': # sort of a hack, could cause bugs
+        if data[i].get_text():
             custom_intervals.append(data[i].get_text())
     timeline.set_interval(0, True, custom_intervals)
 
@@ -137,6 +142,9 @@ def main():
     main_recompile = builder.get_object('main-recompile')
     main_set_interval = builder.get_object('main-set-interval')
 
+    compiled_image = builder.get_object('compiled-image')
+    viewport = builder.get_object('viewport')
+
     phase_input = builder.get_object('phase-input')
     pi_start_week = builder.get_object('pi-start-week')
     pi_end_week = builder.get_object('pi-end-week')
@@ -162,8 +170,6 @@ def main():
 
     file_new = builder.get_object('file-new')
     file_open = builder.get_object('file-open')
-#    file_save = builder.get_object('file-save')
-#    file_save_as = builder.get_object('file-save-as')
     file_quit = builder.get_object('file-quit')
 
     help_about = builder.get_object('help-about')
@@ -201,7 +207,8 @@ def main():
     main_new_phase.connect('clicked', show_widget, phase_input)
     main_new_milestone.connect('clicked', show_widget, milestone_input)
     main_set_interval.connect('clicked', show_widget, interval_input)
-    main_recompile.connect('clicked', recompile, timeline)
+    recompile_tuple = (timeline, compiled_image, viewport)
+    main_recompile.connect('clicked', recompile, recompile_tuple)
 
     pi_data_tuple = (pi_start_week, pi_end_week, pi_distance_adjust,\
     pi_color, pi_size_adjust, timeline)
@@ -218,6 +225,7 @@ def main():
     ci_done.connect('clicked', ci_set, ci_data_tuple)
     ci_done.connect('clicked', hide_widget, custom_interval_window)
 
+
     # for hiding non-used widgets
     hiders = (main_new_milestone, main_set_interval, main_recompile)
     for hider in hiders:
@@ -228,6 +236,9 @@ def main():
     hiders = (main_new_phase, main_new_milestone, main_recompile)
     for hider in hiders:
         hider.connect('clicked', hide_widget, interval_input)
+    hiders = (main_new_phase, main_new_milestone, main_set_interval)
+    for hider in hiders:
+        hider.connect('clicked', hide_widget, viewport)
     del hiders
 
     ## destroys ##
@@ -240,6 +251,11 @@ def main():
     file_new.connect('activate', new_project, new_project_tuple)
     file_quit.connect('activate', gtk.main_quit)
     help_about.connect('activate', run_widget, about_window)
+
+    # misc
+    project_init_window.set_default(project_init_ok)
+    project_new_window.set_default(project_init_ok)
+
 
     gtk.main()
 

@@ -541,6 +541,26 @@ milestone</property>
             <property name="position">4</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkViewport" id="viewport">
+            <property name="name"> </property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkImage" id="compiled-image">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_top">7</property>
+                <property name="margin_bottom">7</property>
+                <property name="stock">gtk-dialog-error</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">5</property>
+          </packing>
+        </child>
       </object>
     </child>
     <child type="titlebar">
@@ -557,8 +577,9 @@ milestone</property>
     <property name="comments" translatable="yes">For assistance, visit this project's GitHub page.</property>
     <property name="website">https://www.github.com/drop-table-users/timeline-maker</property>
     <property name="website_label" translatable="yes">timeline-maker</property>
-    <property name="authors">Albert Brox III
-</property>
+    <property name="authors">
+Albert Brox III,
+Claudio Fiandrino (TikZ library author)</property>
     <property name="logo_icon_name">dialog-information</property>
     <property name="license_type">bsd</property>
     <child internal-child="vbox">
@@ -831,6 +852,7 @@ milestone</property>
             <property name="label" translatable="yes">OK</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="can_default">True</property>
             <property name="receives_default">True</property>
             <property name="halign">center</property>
             <property name="margin_top">6</property>
@@ -889,6 +911,7 @@ milestone</property>
             <property name="label" translatable="yes">OK</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="can_default">True</property>
             <property name="receives_default">True</property>
             <property name="halign">center</property>
             <property name="margin_top">6</property>

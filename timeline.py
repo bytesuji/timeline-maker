@@ -37,9 +37,9 @@ class Timeline:
 
         call([engine, self.name + '.tex'])
         #call(['evince', self.name + '.pdf']) # change evince to pdf viewer of your choice
-        call(('convert -density 300 ' + self.name + '.pdf -quality 90 ' +\
+        call(('convert -density 300 ' + self.name + '.pdf -quality 90 -scale 578x264 ' +\
         self.name + '.png').split(' '))
-        call(('ristretto ' + self.name + '.png').split(' '))
+#       call(('ristretto ' + self.name + '.png').split(' '))
 
     def init_file(self):
 
