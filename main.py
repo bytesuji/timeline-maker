@@ -4,7 +4,6 @@
 # make placement a dropdown
 # make 'added' confirm labels
 # reset/clear sliders and boxes upon add click
-# add preview window
 
 import timeline as tl
 import gi
@@ -92,7 +91,11 @@ def add_new_milestone(widget, data):
     phase_degree = data[1].get_value()
     direction = data[2].get_value()
     length = data[3].get_text()
-    placement = data[4].get_text()
+    placement = data[4].get_active()
+    if placement == 1:
+        placement = 'above'
+    if placement == 2:
+        placement = 'below'
     width = data[5].get_text()
     text = data[6].get_text()
     timeline = data[7]
@@ -104,7 +107,7 @@ def add_new_milestone(widget, data):
     data[1].set_value(0)
     data[2].set_value(0)
     data[3].set_text('')
-    data[4].set_text('')
+    data[4].set_active(0)
     data[5].set_text('')
     data[6].set_text('')
 
