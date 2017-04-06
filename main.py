@@ -100,8 +100,14 @@ def add_new_milestone(widget, data):
     text = data[6].get_text()
     timeline = data[7]
 
-    timeline.add_milestone(phase, phase_degree, direction,\
-    length, placement, width, text)
+    if not width == '':
+        timeline.add_milestone(phase, phase_degree, direction,\
+        length, placement, width, text)
+    else:
+        timeline.add_milestone(phase, phase_degree, direction,\
+        length, placement, width, text, False)
+
+
 
     data[0].set_text('')
     data[1].set_value(0)
@@ -251,9 +257,11 @@ def main():
     hiders = (main_new_phase, main_new_milestone, main_recompile)
     for hider in hiders:
         hider.connect('clicked', hide_widget, interval_input)
+    '''
     hiders = (main_new_phase, main_new_milestone, main_set_interval)
     for hider in hiders:
         hider.connect('clicked', hide_widget, viewport)
+    '''
     del hiders
 
     ## destroys ##

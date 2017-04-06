@@ -64,7 +64,7 @@ class Timeline:
 
         self.string = new_string
 
-    def get_custom_intervals():
+    def _get_custom_intervals():
 
         print("Please input your interval markers: ")
         custom_intervals = []
@@ -116,16 +116,21 @@ class Timeline:
 
         self.string = new_string
 
-    def add_milestone(self, phase, phase_degree, direction, length, placement, width, text):
+    def add_milestone(self, phase, phase_degree, direction, length, placement, width, text, c_width=True):
 
         """Adds a label attached to a phase with all the specified params."""
 
         index = self.string.find(r'\addmilestone')
         index = index + self.string[index:].find('\n')
 
-        new_string = self.string[:index] + '\n' + r'\addmilestone{at=phase-' + str(phase) + \
-		  '.' + str(phase_degree) + ',direction=' + str(direction) + ':' + str(length) +\
-		  'cm,text={' + text + '},text options={' + placement + ',text width=' + str(width)\
-		  + 'cm}}\n' + self.string[index:]
+        if c_width:
+            new_string = self.string[:index] + '\n' + r'\addmilestone{at=phase-' + str(phase) + \
+    		  '.' + str(phase_degree) + ',direction=' + str(direction) + ':' + str(length) +\
+    		  'cm,text={' + text + '},text options={' + placement + ',text width=' + str(width)\
+    		  + 'cm}}\n' + self.string[index:]
+        else:
+            new_string = self.string[:index] + '\n' + r'\addmilestone{at=phase-' + str(phase) + \
+    		  '.' + str(phase_degree) + ',direction=' + str(direction) + ':' + str(length) +\
+    		  'cm,text={' + text + '},text options={' + placement + '}}\n' + self.string[index:]
 
         self.string = new_string
