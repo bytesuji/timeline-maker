@@ -1,8 +1,6 @@
 #!/bin/python3
 ### TODO ###
 # make color selection a dropdown menu
-# make placement a dropdown
-# make 'added' confirm labels
 
 import timeline as tl
 import gi
@@ -106,8 +104,6 @@ def add_new_milestone(widget, data):
     else:
         timeline.add_milestone(phase, phase_degree, direction,\
         length, placement, width, text, False)
-
-
 
     data[0].set_text('')
     data[1].set_value(0)
