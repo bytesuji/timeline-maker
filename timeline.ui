@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
-  <requires lib="gtk+" version="3.18"/>
+  <requires lib="gtk+" version="3.20"/>
   <object class="GtkAdjustment" id="mi-direction-adjust">
     <property name="upper">360</property>
     <property name="step_increment">0.10000000000000001</property>
@@ -176,6 +176,7 @@
                     <property name="can_focus">True</property>
                     <property name="margin_right">8</property>
                     <property name="adjustment">pi-distance-adjust</property>
+                    <property name="show_fill_level">True</property>
                     <property name="round_digits">1</property>
                     <property name="value_pos">right</property>
                   </object>
@@ -202,6 +203,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="adjustment">pi-size-adjust</property>
+                    <property name="show_fill_level">True</property>
                     <property name="round_digits">1</property>
                     <property name="value_pos">right</property>
                   </object>
@@ -334,6 +336,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="adjustment">mi-phase-degree-adjust</property>
+                    <property name="show_fill_level">True</property>
                     <property name="round_digits">1</property>
                     <property name="value_pos">right</property>
                   </object>
@@ -360,6 +363,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="adjustment">mi-direction-adjust</property>
+                    <property name="show_fill_level">True</property>
                     <property name="round_digits">1</property>
                     <property name="value_pos">right</property>
                   </object>
@@ -590,6 +594,9 @@ milestone</property>
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkAboutDialog" id="about-window">
     <property name="can_focus">False</property>
@@ -607,11 +614,14 @@ Claudio Fiandrino (TikZ library author)</property>
     <property name="logo_icon_name">dialog-information</property>
     <property name="license_type">bsd</property>
     <child internal-child="vbox">
-      <object class="GtkBox" id="aboutdialog-vbox1">
+      <object class="GtkBox">
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="aboutdialog-action_area1">
+          <object class="GtkButtonBox">
             <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -620,6 +630,9 @@ Claudio Fiandrino (TikZ library author)</property>
           </packing>
         </child>
       </object>
+    </child>
+    <child>
+      <placeholder/>
     </child>
   </object>
   <object class="GtkWindow" id="custom-interval-window">
@@ -820,6 +833,9 @@ Claudio Fiandrino (TikZ library author)</property>
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkWindow" id="project-init-window">
     <property name="width_request">199</property>
@@ -883,6 +899,9 @@ Claudio Fiandrino (TikZ library author)</property>
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkWindow" id="project-new-window">
     <property name="width_request">199</property>
@@ -940,6 +959,9 @@ Claudio Fiandrino (TikZ library author)</property>
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
 </interface>

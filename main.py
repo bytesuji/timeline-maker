@@ -1,6 +1,7 @@
 #!/bin/python3
 ### TODO ###
 # make color selection a dropdown menu
+# add remove options (lots of code required)
 
 import timeline as tl
 import gi
@@ -281,4 +282,5 @@ def main():
     gtk.main()
 
 if __name__ == '__main__':
+
     main()
