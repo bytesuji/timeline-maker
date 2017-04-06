@@ -3,12 +3,12 @@
 # make color selection a dropdown menu
 # make placement a dropdown
 # make 'added' confirm labels
-# reset/clear sliders and boxes upon add click
 
 import timeline as tl
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
+from gi.repository import GObject as gobject
 
 def hide_widget(widget, data):
 
@@ -130,6 +130,12 @@ def new_project(widget, data):
 
     ok.connect('clicked', _ok_callback, data)
 
+def label_hider(labels):
+
+    for label in labels:
+        label.hide()
+
+    gobject.timeout_add(5000, label_hider, labels)
 
 def main():
 
@@ -147,6 +153,9 @@ def main():
 
     compiled_image = builder.get_object('compiled-image')
     viewport = builder.get_object('viewport')
+
+    confirm_label = builder.get_object('confirm-label')
+    ii_set_confirm_label = builder.get_object('ii-set-confirm-label')
 
     phase_input = builder.get_object('phase-input')
     pi_start_week = builder.get_object('pi-start-week')
@@ -216,13 +225,16 @@ def main():
     pi_data_tuple = (pi_start_week, pi_end_week, pi_distance_adjust,\
     pi_color, pi_size_adjust, timeline)
     pi_add.connect('clicked', add_new_phase, pi_data_tuple)
+    pi_add.connect('clicked', show_widget, confirm_label)
 
     mi_data_tuple = (mi_phase, mi_phase_degree_adjust, mi_direction_adjust,\
     mi_length, mi_placement, mi_width, mi_text, timeline)
     mi_add.connect('clicked', add_new_milestone, mi_data_tuple)
+    mi_add.connect('clicked', show_widget, confirm_label)
 
     ii_data_tuple = (ii_quantity, ii_custom_interval, custom_interval_window, timeline)
     ii_set.connect('clicked', set_interval, ii_data_tuple)
+    ii_set.connect('clicked', show_widget, ii_set_confirm_label)
 
     ci_data_tuple = (ci_1, ci_2, ci_3, ci_4, ci_5, ci_6, ci_7, ci_8, ci_9, ci_10, timeline)
     ci_done.connect('clicked', ci_set, ci_data_tuple)
@@ -258,6 +270,8 @@ def main():
     # misc
     project_init_window.set_default(project_init_ok)
     project_new_window.set_default(project_init_ok)
+    labels_tuple = (confirm_label, ii_set_confirm_label)
+    gobject.timeout_add(5000, label_hider, labels_tuple)
 
 
     gtk.main()
