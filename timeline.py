@@ -3,9 +3,7 @@ from subprocess import call
 
 
 class Timeline:
-
     def __init__(self, name='placeholder'):
-
         self.string = r"""\documentclass[border=10pt]{standalone}
         \usepackage{tikz}
         \usetikzlibrary{timeline,positioning}
@@ -28,11 +26,9 @@ class Timeline:
         self.name = name
 
     def set_name(self, name):
-
         self.name = name
 
     def create(self, engine='xelatex', remove_tex_file=True):
-
         """Compiles the .tex file and displays the result with a .pdf viewer. If remove_tex_file is set to false, the .tex file is left intact after compilation; for debugging purposes or advanced users."""
 
         call([engine, self.name + '.tex'])
@@ -42,14 +38,12 @@ class Timeline:
 #       call(('ristretto ' + self.name + '.png').split(' '))
 
     def init_file(self):
-
         """Creates the .tex file on first run; writes self.string to it."""
 
         f = open(self.name + '.tex', 'w')
         f = f.write(self.string)
 
     def add_phase(self, start_week, end_week, in_val, color='red', degree=2.5):
-
         """Adds a phase to the timeline. Takes these args:
             Starting week, end week, in_val (which is a value between 0 and 1 which specifies
             where the phase should be placed between the weeks), color, and degree, which is the radius of the phase in centimeters."""
@@ -65,7 +59,6 @@ class Timeline:
         self.string = new_string
 
     def _get_custom_intervals():
-
         print("Please input your interval markers: ")
         custom_intervals = []
         while True:
@@ -77,7 +70,6 @@ class Timeline:
 
     def set_interval(self, interval_length, custom_interval=False,\
     custom_intervals=[]):
-
         """Sets the interval markers on the timeline. The default is weeks."""
 
         if custom_interval:
@@ -107,7 +99,6 @@ class Timeline:
         self.string = new_string
 
     def add_milestone(self, phase, phase_degree, direction, length, placement, width, text, c_width=True):
-
         """Adds a label attached to a phase with all the specified params."""
 
         index = self.string.find(r'\addmilestone')

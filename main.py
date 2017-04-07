@@ -2,6 +2,7 @@
 ### TODO ###
 # make color selection a dropdown menu
 # add remove options (lots of code required)
+# add more functions comprising main
 
 import timeline as tl
 import gi
@@ -10,20 +11,16 @@ from gi.repository import Gtk as gtk
 from gi.repository import GObject as gobject
 
 def hide_widget(widget, data):
-
     data.hide()
 
 def show_widget(widget, data):
-
     data.show()
 
 def run_widget(widget, data):
-
     data.run()
     data.destroy()
 
 def recompile(widget, data):
-
     timeline = data[0]
     preview = data[1]
     viewport = data[2]
@@ -35,7 +32,6 @@ def recompile(widget, data):
     viewport.show()
 
 def init_project(widget, data):
-
     textbox = data[0]
     timeline = data[2]
     name = textbox.get_text()
@@ -43,7 +39,6 @@ def init_project(widget, data):
     data[1].hide()
 
 def add_new_phase(widget, data):
-
     start_week = data[0].get_text()
     end_week = data[1].get_text()
     distance = data[2].get_value()
@@ -61,7 +56,6 @@ def add_new_phase(widget, data):
     data[4].set_value(0)
 
 def set_interval(widget, data):
-
     weeks = data[0]
     switch = data[1]
     window = data[2]
@@ -76,7 +70,6 @@ def set_interval(widget, data):
     weeks.set_text('')
 
 def ci_set(widget, data):
-
     timeline = data[10]
     custom_intervals = []
     for i in range(10):
@@ -85,7 +78,6 @@ def ci_set(widget, data):
     timeline.set_interval(0, True, custom_intervals)
 
 def add_new_milestone(widget, data):
-
     phase = data[0].get_text()
     phase_degree = data[1].get_value()
     direction = data[2].get_value()
@@ -116,8 +108,6 @@ def add_new_milestone(widget, data):
 
 
 def new_project(widget, data):
-
-    # new_project_tuple = [timeline, project_new_window, project_new_input, project_new_ok]
     timeline = data[0]
     timeline.__init__()
     window = data[1]
@@ -127,21 +117,18 @@ def new_project(widget, data):
     window.show()
 
     def _ok_callback(widget, data):
-
         data[0].set_name(data[2].get_text())
         data[1].hide()
 
     ok.connect('clicked', _ok_callback, data)
 
 def label_hider(labels):
-
     for label in labels:
         label.hide()
 
     gobject.timeout_add(5000, label_hider, labels)
 
 def main():
-
     builder = gtk.Builder()
     builder.add_from_file('timeline.ui')
 
@@ -277,5 +264,4 @@ def main():
     gtk.main()
 
 if __name__ == '__main__':
-
     main()
