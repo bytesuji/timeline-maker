@@ -1,6 +1,8 @@
 #!/bin/python3
-from subprocess import call
 
+# TODO 
+# redo the entire thing with string formatting
+from subprocess import call
 
 class Timeline:
     def __init__(self, name='placeholder'):
@@ -24,6 +26,7 @@ class Timeline:
         """
 
         self.name = name
+        self.phases = 0
 
     def set_name(self, name):
         self.name = name
@@ -56,6 +59,7 @@ class Timeline:
 		  ' and ' + str(end_week) + ' in ' + str(in_val) + ',involvement degree=' + str(degree)\
 		   + 'cm,phase color=' + color + '}' + new_string[index:]
 
+        self.phases = self.phases + 1
         self.string = new_string
 
     def _get_custom_intervals():
@@ -115,3 +119,26 @@ class Timeline:
     		  'cm,text={' + text + '},text options={' + placement + '}}\n' + self.string[index:]
 
         self.string = new_string
+
+    def remove_phase(self, phase_index):
+        """removes a phase at the specified index"""
+
+        phase_index = self.phases - phase_index # because entries are added above the previous 
+        phase_start, phase_end = 0, 0
+        current_index = 0
+
+        while current_index != phase_index:
+            phase_start = self.string[phase_end:].find(r'\phase{') + phase_end
+            phase_end = self.string[phase_start:].find('\n') + phase_start
+            current_index = current_index + 1
+
+        self.string = self.string[:phase_start] + self.string[phase_end:]
+
+if __name__ == '__main__':
+    t = Timeline('test')
+    t.init_file()
+    t.add_phase(2,3,0.5,'red',3.5)
+    t.add_phase(3,4,0.5,'green',4.0)
+    t.remove_phase(0)
+    t.init_file()
+    t.create()
