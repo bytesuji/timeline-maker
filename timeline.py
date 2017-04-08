@@ -133,12 +133,3 @@ class Timeline:
             current_index = current_index + 1
 
         self.string = self.string[:phase_start] + self.string[phase_end:]
-
-if __name__ == '__main__':
-    t = Timeline('test')
-    t.init_file()
-    t.add_phase(2,3,0.5,'red',3.5)
-    t.add_phase(3,4,0.5,'green',4.0)
-    t.remove_phase(0)
-    t.init_file()
-    t.create()
