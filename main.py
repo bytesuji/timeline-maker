@@ -10,6 +10,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
 from gi.repository import GObject as gobject
 
+# Callbacks 
 def hide_widget(widget, data):
     data.hide()
 
@@ -20,6 +21,7 @@ def run_widget(widget, data):
     data.run()
     data.destroy()
 
+# Implementation functions 
 def recompile(widget, data):
     timeline = data[0]
     preview = data[1]

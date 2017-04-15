@@ -27,13 +27,13 @@ class Timeline:
 
         self.name = name
         self.phases = 0
+        self.milestones = 0
 
     def set_name(self, name):
         self.name = name
 
     def create(self, engine='xelatex', remove_tex_file=True):
         """Compiles the .tex file and displays the result with a .pdf viewer. If remove_tex_file is set to false, the .tex file is left intact after compilation; for debugging purposes or advanced users."""
-
         call([engine, self.name + '.tex'])
         #call(['evince', self.name + '.pdf']) # change evince to pdf viewer of your choice
         call(('convert -density 300 ' + self.name + '.pdf -quality 90 -scale 578x264 ' +\
@@ -42,7 +42,6 @@ class Timeline:
 
     def init_file(self):
         """Creates the .tex file on first run; writes self.string to it."""
-
         f = open(self.name + '.tex', 'w')
         f = f.write(self.string)
 
@@ -50,7 +49,6 @@ class Timeline:
         """Adds a phase to the timeline. Takes these args:
             Starting week, end week, in_val (which is a value between 0 and 1 which specifies
             where the phase should be placed between the weeks), color, and degree, which is the radius of the phase in centimeters."""
-
         new_string = self.string
         index = new_string.find('\phase')
         index = new_string[index:].find('\n') + index; # find the next newline after the first phase
@@ -75,7 +73,6 @@ class Timeline:
     def set_interval(self, interval_length, custom_interval=False,\
     custom_intervals=[]):
         """Sets the interval markers on the timeline. The default is weeks."""
-
         if custom_interval:
             # replace \timeline
             begin_index = self.string.find(r'\timeline')
@@ -104,25 +101,24 @@ class Timeline:
 
     def add_milestone(self, phase, phase_degree, direction, length, placement, width, text, c_width=True):
         """Adds a label attached to a phase with all the specified params."""
-
         index = self.string.find(r'\addmilestone')
         index = index + self.string[index:].find('\n')
 
         if c_width:
-            new_string = self.string[:index] + '\n' + r'\addmilestone{at=phase-' + str(phase) + \
+            new_string = self.string[:index] + '\n' + r'\addmilestone{at=phase-' + str(self.phases - phase) + \
     		  '.' + str(phase_degree) + ',direction=' + str(direction) + ':' + str(length) +\
     		  'cm,text={' + text + '},text options={' + placement + ',text width=' + str(width)\
     		  + 'cm}}\n' + self.string[index:]
         else:
-            new_string = self.string[:index] + '\n' + r'\addmilestone{at=phase-' + str(phase) + \
+            new_string = self.string[:index] + '\n' + r'\addmilestone{at=phase-' + str(self.phases - phase) + \
     		  '.' + str(phase_degree) + ',direction=' + str(direction) + ':' + str(length) +\
     		  'cm,text={' + text + '},text options={' + placement + '}}\n' + self.string[index:]
 
+        self.milestones = self.milestones + 1
         self.string = new_string
 
     def remove_phase(self, phase_index):
         """removes a phase at the specified index"""
-
         phase_index = self.phases - phase_index # because entries are added above the previous 
         phase_start, phase_end = 0, 0
         current_index = 0
@@ -133,3 +129,27 @@ class Timeline:
             current_index = current_index + 1
 
         self.string = self.string[:phase_start] + self.string[phase_end:]
+
+    def remove_milestone(self, milestone_index):
+        """removes a milestone at the specified index"""
+        milestone_index = self.milestones - milestone_index # because entries are added above the previous 
+        milestone_start, milestone_end = 0, 0
+        current_index = 0
+
+        while current_index != milestone_index:
+            print(milestone_start, milestone_end)
+            milestone_start = self.string[milestone_end:].find(r'\addmilestone{') + milestone_end
+            milestone_end = self.string[milestone_start:].find('\n') + milestone_start
+            current_index = current_index + 1
+
+        self.string = self.string[:milestone_start] + self.string[milestone_end:]
+
+if __name__ == '__main__':
+    t = Timeline('test')
+    t.init_file()
+    t.add_phase(2,3,0.5,'red',4.5)
+    t.add_milestone(0,90,90,3,'above',None,'test milestone', False)
+    t.init_file()
+    t.create()
+    t.remove_milestone(0)
+    print(t.string) 
