@@ -143,13 +143,3 @@ class Timeline:
             current_index = current_index + 1
 
         self.string = self.string[:milestone_start] + self.string[milestone_end:]
-
-if __name__ == '__main__':
-    t = Timeline('test')
-    t.init_file()
-    t.add_phase(2,3,0.5,'red',4.5)
-    t.add_milestone(0,90,90,3,'above',None,'test milestone', False)
-    t.init_file()
-    t.create()
-    t.remove_milestone(0)
-    print(t.string) 
