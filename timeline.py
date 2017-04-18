@@ -54,8 +54,8 @@ class Timeline:
         index = new_string[index:].find('\n') + index; # find the next newline after the first phase
 
         new_string = new_string[:index] + '\n\t' + r'\phase{between week=' + str(start_week) + \
-		  ' and ' + str(end_week) + ' in ' + str(in_val) + ',involvement degree=' + str(degree)\
-		   + 'cm,phase color=' + color + '}' + new_string[index:]
+        ' and ' + str(end_week) + ' in ' + str(in_val) + ',involvement degree=' + str(degree)\
+        + 'cm,phase color=' + color + '}' + new_string[index:]
 
         self.phases = self.phases + 1
         self.string = new_string

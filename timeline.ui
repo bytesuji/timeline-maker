@@ -428,6 +428,20 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">2</property>
+                    <property name="margin_bottom">2</property>
+                    <property name="label" translatable="yes">Custom interval:</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkSwitch" id="ii-custom-interval">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -435,7 +449,7 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
@@ -603,7 +617,7 @@ milestone</property>
     <property name="type_hint">dialog</property>
     <property name="transient_for">main-window</property>
     <property name="program_name">Timeline Maker</property>
-    <property name="version">1.1</property>
+    <property name="version">0.3</property>
     <property name="copyright" translatable="yes">Copyright 2017 ExypnoTech</property>
     <property name="comments" translatable="yes">For assistance, visit this project's GitHub page.</property>
     <property name="website">https://www.github.com/drop-table-users/timeline-maker</property>
