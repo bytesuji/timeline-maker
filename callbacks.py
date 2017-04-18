@@ -7,6 +7,19 @@ def hide_widget(widget, data):
 def show_widget(widget, data):
     data.show()
 
+def show_hide(widget, data):
+	"""Used for showing one widget and hiding another simultaneously."""
+	main_box = data[0]
+	remv_box = data[1]
+	which = data[2]
+
+	if which == 'add':
+		main_box.show()
+		remv_box.hide()
+	if which == 'des':
+		main_box.hide()
+		remv_box.show()
+
 def run_widget(widget, data):
     data.run()
     data.destroy()
@@ -127,3 +140,24 @@ def label_hider(labels):
 def reset_timeline(widget, data):
 	data.__init__()
 	data.init_file()
+
+def show_remove(widget, data):
+	box = data[0]
+	which = data[1]
+	string = data[2]
+
+	box.show()
+	which = string
+
+def remove_phase_or_ms(widget, data):
+	data[3].set_text('Removed.')
+	timeline = data[0]
+	try:
+		index = int(data[2].get_text())
+	except ValueError:
+		print('Please enter a number.') # TODO make this a popup
+
+	if data[1] == 'phase':
+		timeline.remove_phase(index)
+	if data[1] == 'milestone':
+		timeline.remove_milestone(index)
