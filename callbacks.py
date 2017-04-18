@@ -15,13 +15,12 @@ def run_widget(widget, data):
 def recompile(widget, data):
     timeline = data[0]
     preview = data[1]
-    viewport = data[2]
 
     timeline.init_file()
     timeline.create()
 
     preview.set_from_file(timeline.name + '.png')
-    viewport.show()
+    preview.show()
 
 def init_project(widget, data):
     textbox = data[0]
@@ -37,8 +36,10 @@ def add_new_phase(widget, data):
     color = data[3].get_text()
     size = data[4].get_value()
     timeline = data[5]
+    label = data[6]
 
     timeline.add_phase(start_week, end_week, distance, color, size)
+    label.set_text('Added.')
 
     # cleanup
     data[0].set_text('')
@@ -82,6 +83,7 @@ def add_new_milestone(widget, data):
     width = data[5].get_text()
     text = data[6].get_text()
     timeline = data[7]
+    label = data[8]
 
     if not width == '':
         timeline.add_milestone(phase, phase_degree, direction,\
@@ -89,6 +91,8 @@ def add_new_milestone(widget, data):
     else:
         timeline.add_milestone(phase, phase_degree, direction,\
         length, placement, width, text, False)
+
+    label.set_text('Added.')
 
     data[0].set_text('')
     data[1].set_value(0)
@@ -119,3 +123,7 @@ def label_hider(labels):
         label.hide()
 
     gobject.timeout_add(5000, label_hider, labels)
+
+def reset_timeline(widget, data):
+	data.__init__()
+	data.init_file()

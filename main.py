@@ -1,15 +1,13 @@
 #!/bin/python3
 ### TODO ###
-# make color selection a dropdown menu
 # add remove options (lots of code required)
-# add more functions comprising main
 
-import timeline as tl
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
 from gi.repository import GObject as gobject
 
+import timeline as tl
 from callbacks import * # safe because these have all been defined by me
 
 def main():
@@ -20,13 +18,17 @@ def main():
     ## main window ##
     main_window = builder.get_object('main-window')
     menubar = builder.get_object('menubar')
+
     main_new_phase = builder.get_object('main-new-phase')
     main_new_milestone = builder.get_object('main-new-milestone')
     main_recompile = builder.get_object('main-recompile')
     main_set_interval = builder.get_object('main-set-interval')
 
+    main_reset = builder.get_object('main-reset')
+    main_remove_phase = builder.get_object('main-remove-phase')
+    main_remove_milestone = builder.get_object('main-remove-milestone')
+
     compiled_image = builder.get_object('compiled-image')
-    viewport = builder.get_object('viewport')
 
     confirm_label = builder.get_object('confirm-label')
     ii_set_confirm_label = builder.get_object('ii-set-confirm-label')
@@ -54,15 +56,21 @@ def main():
     ii_custom_interval = builder.get_object('ii-custom-interval')
     ii_set = builder.get_object('ii-set')
 
+    remove = builder.get_object('remove')
+    remove_remove = builder.get_object('remove-remove')
+    remove_index = builder.get_object('remove_index')
+
     file_new = builder.get_object('file-new')
     file_open = builder.get_object('file-open')
     file_quit = builder.get_object('file-quit')
 
     help_about = builder.get_object('help-about')
+
     ## initialiser window ##
     project_init_window = builder.get_object('project-init-window')
     project_init_input = builder.get_object('project-init-input')
     project_init_ok = builder.get_object('project-init-ok')
+
     ## new window ##
     project_new_window = builder.get_object('project-new-window')
     project_new_input = builder.get_object('project-new-input')
@@ -81,28 +89,37 @@ def main():
     ci_9 = builder.get_object('ci-9')
     ci_10 = builder.get_object('ci-10')
 
-    ## about window ##
+    ## dialogues ## 
     about_window = builder.get_object('about-window')
+    reset_confirm_window = builder.get_object('reset-confirm-window')
+    reset_ok = builder.get_object('reset-ok')
+    reset_cancel = builder.get_object('reset-cancel')
 
     ### connections ###
+
     ## init ##
     timeline = tl.Timeline()
     init_tuple = [project_init_input, project_init_window, timeline]
     project_init_ok.connect('clicked', init_project, init_tuple)
+
     ## main window ##
     main_new_phase.connect('clicked', show_widget, phase_input)
     main_new_milestone.connect('clicked', show_widget, milestone_input)
     main_set_interval.connect('clicked', show_widget, interval_input)
-    recompile_tuple = (timeline, compiled_image, viewport)
+    recompile_tuple = (timeline, compiled_image)
     main_recompile.connect('clicked', recompile, recompile_tuple)
 
+    main_reset.connect('clicked', show_widget, reset_confirm_window) 
+    reset_ok.connect('clicked', reset_timeline, timeline)
+    reset_cancel.connect('clicked', hide_widget, reset_confirm_window)
+
     pi_data_tuple = (pi_start_week, pi_end_week, pi_distance_adjust,\
-    pi_color, pi_size_adjust, timeline)
+    pi_color, pi_size_adjust, timeline, confirm_label)
     pi_add.connect('clicked', add_new_phase, pi_data_tuple)
     pi_add.connect('clicked', show_widget, confirm_label)
 
     mi_data_tuple = (mi_phase, mi_phase_degree_adjust, mi_direction_adjust,\
-    mi_length, mi_placement, mi_width, mi_text, timeline)
+    mi_length, mi_placement, mi_width, mi_text, timeline, confirm_label)
     mi_add.connect('clicked', add_new_milestone, mi_data_tuple)
     mi_add.connect('clicked', show_widget, confirm_label)
 
@@ -115,7 +132,7 @@ def main():
     ci_done.connect('clicked', hide_widget, custom_interval_window)
 
 
-    # for hiding non-used widgets
+    # for hiding unused widgets
     hiders = (main_new_milestone, main_set_interval, main_recompile)
     for hider in hiders:
         hider.connect('clicked', hide_widget, phase_input)
